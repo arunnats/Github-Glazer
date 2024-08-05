@@ -15,14 +15,14 @@ const App: React.FC = () => {
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setUsername(event.target.value);
-		console.log("Username input changed:", event.target.value);
+		// console.log("Username input changed:", event.target.value);
 	};
 
 	const handleButtonClick = async () => {
 		const githubApiKey = import.meta.env.VITE_GITHUB_API_KEY;
 		const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 
-		console.log("Button clicked. Fetching data for user:", username);
+		// console.log("Button clicked. Fetching data for user:", username);
 
 		try {
 			const headers = {
@@ -30,26 +30,26 @@ const App: React.FC = () => {
 				Authorization: `token ${githubApiKey}`,
 			};
 
-			console.log("Fetching GitHub user profile...");
+			// console.log("Fetching GitHub user profile...");
 			let response = await fetch(`https://api.github.com/users/${username}`, {
 				headers,
 			});
-			console.log("GitHub user profile response:", response);
+			// console.log("GitHub user profile response:", response);
 
 			if (response.status === 404) {
-				console.log("404 User not found");
+				// console.log("404 User not found");
 				setResponse("User not found. Please try again");
 			} else if (response.ok) {
 				let profileResponse = await response.json();
-				console.log("GitHub user profile data:", profileResponse);
+				// console.log("GitHub user profile data:", profileResponse);
 
-				console.log("Fetching GitHub user repositories...");
+				// console.log("Fetching GitHub user repositories...");
 				response = await fetch(
 					`https://api.github.com/users/${username}/repos?sort=updated`,
 					{ headers }
 				);
 				const repoResponse = await response.json();
-				console.log("GitHub user repositories data:", repoResponse);
+				// console.log("GitHub user repositories data:", repoResponse);
 
 				let readmeResponse = "";
 				try {
@@ -59,7 +59,7 @@ const App: React.FC = () => {
 						{ headers }
 					);
 					readmeResponse = readmeData.data;
-					console.log("User's README.md content:", readmeResponse);
+					// console.log("User's README.md content:", readmeResponse);
 				} catch (error) {
 					console.error("Error fetching user's README.md:", error);
 				}
@@ -86,14 +86,14 @@ const App: React.FC = () => {
 						.slice(0, 15),
 				};
 
-				console.log("Compiled data for prompt:", datas);
+				// console.log("Compiled data for prompt:", datas);
 
 				let prompt = `Give a short and wholesome / encouraging compliment session for the following GitHub profile: ${username}. Here are the details: "${JSON.stringify(
 					datas
 				)}"`;
 
 				try {
-					console.log("Sending data to OpenAI API...");
+					// console.log("Sending data to OpenAI API...");
 					const completion = await openai.chat.completions.create({
 						model: "gpt-4",
 						messages: [
@@ -107,7 +107,7 @@ const App: React.FC = () => {
 					});
 
 					const glaze = completion.choices[0].message.content;
-					console.log("OpenAI API response:", completion);
+					// console.log("OpenAI API response:", completion);
 					setResponse(glaze);
 				} catch (error) {
 					console.error("Error generating compliment:", error);
@@ -124,7 +124,7 @@ const App: React.FC = () => {
 		}
 
 		setResponseReceived(true);
-		console.log("Response received and set.");
+		// console.log("Response received and set.");
 	};
 
 	return (
