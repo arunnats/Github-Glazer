@@ -9,9 +9,33 @@ const App: React.FC = () => {
 		setUsername(event.target.value);
 	};
 
-	const handleButtonClick = () => {
+	const handleButtonClick = async () => {
+		const githubApiKey = import.meta.env.VITE_GITHUB_API_KEY;
 		console.log("GitHub Username:", username);
-		setResponse(`You entered: ${username}`);
+
+		try {
+			const response = await fetch(`https://api.github.com/users/${username}`, {
+				headers: {
+					Accept: "application/vnd.github.v3+json",
+					Authorization: `token ${githubApiKey}`,
+				},
+			});
+
+			if (response.status === 404) {
+				console.log("404 aaa");
+				setResponse("User not found. Please try again");
+			} else if (response.ok) {
+				const profileResponse = await response.json();
+				console.log(profileResponse);
+				setResponse(`You entered: ${username}`);
+			} else {
+				setResponse("Our glazers are busy elsewhere, try again later.");
+			}
+		} catch (error) {
+			console.error("Error:", error);
+			setResponse("Our glazers are busy elsewhere, try again later.");
+		}
+
 		setResponseReceived(true);
 	};
 
