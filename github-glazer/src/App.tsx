@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openAI";
 
 const App: React.FC = () => {
 	const [username, setUsername] = useState("");
 	const [response, setResponse] = useState("");
 	const [responseReceived, setResponseReceived] = useState(false);
 
-	const configuration = new Configuration({
-		apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+	const openaiApiKey = import.meta.env.VITE_OPENAI_API_KEY;
+	const openai = new OpenAI({
+		apiKey: openaiApiKey,
+		dangerouslyAllowBrowser: true,
 	});
-	const openai = new OpenAIApi(configuration);
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setUsername(event.target.value);
@@ -55,16 +56,7 @@ const App: React.FC = () => {
 					);
 					readmeResponse = readmeData.data;
 				} catch (error) {
-					console.error("Error fetching main README:", error);
-					try {
-						let readmeData = await axios.get(
-							`${CORS_PROXY}https://raw.githubusercontent.com/${username}/${username}/master/README.md`,
-							{ headers: axiosHeaders }
-						);
-						readmeResponse = readmeData.data;
-					} catch (error) {
-						console.error("Error fetching master README:", error);
-					}
+					console.error("Error fetching master README:", error);
 				}
 
 				const datas = {
@@ -96,26 +88,27 @@ const App: React.FC = () => {
 				)}"`;
 
 				try {
-					const completion = await client.chat.completions.create({
-						model: "gpt-4o",
-						stream: false,
+					const completion = await openai.chat.completions.create({
+						model: "gpt-4",
 						messages: [
 							{
 								role: "system",
 								content:
-									"You compliment and glaze people github account based on their bio, name, readme, and repos as wholesome and nice as possible, and keep it short and encourage them on msot aspects of their github.",
+									"You compliment and glaze people's GitHub accounts based on their bio, name, README, and repos as wholesomely and nicely as possible, and keep it short and encouraging about most aspects of their GitHub.",
 							},
 							{ role: "user", content: prompt },
 						],
 					});
 
-					const glaze = completion.choices[0].message.content;
-					console.log(glaze);
+					// const glaze = completion.data.choices[0].message.content;
+					console.log(completion);
+					setResponse("hi");
 				} catch (error) {
-					console.error("Error:", error);
+					console.error("Error generating compliment:", error);
+					setResponse(
+						"There was an error generating the compliment. Please try again later."
+					);
 				}
-
-				setResponse(`User: ${profileResponse.name || username}`);
 			} else {
 				setResponse("Our glazers are busy elsewhere, try again later.");
 			}
