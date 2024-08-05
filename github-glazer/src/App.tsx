@@ -13,6 +13,8 @@ const App: React.FC = () => {
 
 	const handleButtonClick = async () => {
 		const githubApiKey = import.meta.env.VITE_GITHUB_API_KEY;
+		const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+
 		try {
 			const headers = {
 				Accept: "application/vnd.github.v3+json",
@@ -37,9 +39,14 @@ const App: React.FC = () => {
 
 				let readmeResponse = "";
 				try {
+					const axiosHeaders = {
+						...headers,
+						Origin: window.location.origin,
+					};
+
 					let readmeData = await axios.get(
 						`${CORS_PROXY}https://raw.githubusercontent.com/${username}/${username}/main/README.md`,
-						{ headers }
+						{ headers: axiosHeaders }
 					);
 					readmeResponse = readmeData.data;
 				} catch (error) {
@@ -47,7 +54,7 @@ const App: React.FC = () => {
 					try {
 						let readmeData = await axios.get(
 							`${CORS_PROXY}https://raw.githubusercontent.com/${username}/${username}/master/README.md`,
-							{ headers }
+							{ headers: axiosHeaders }
 						);
 						readmeResponse = readmeData.data;
 					} catch (error) {

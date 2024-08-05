@@ -1210,6 +1210,10 @@ html {
   display: flex;
 }
 
+.contents {
+  display: contents;
+}
+
 .min-h-\[200px\] {
   min-height: 200px;
 }
