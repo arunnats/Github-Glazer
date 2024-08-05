@@ -100,7 +100,7 @@ const App: React.FC = () => {
 							{
 								role: "system",
 								content:
-									"You compliment and glaze people's GitHub accounts based on their bio, name, README, and repos as wholesomely and nicely as possible, and keep it short and encouraging about most aspects of their GitHub.",
+									"You compliment and glaze people's GitHub accounts based on their bio, name, README, and repos as wholesomely and nicely as possible, and keep it full of internet humour and encouraging about most aspects of their GitHub.",
 							},
 							{ role: "user", content: prompt },
 						],
