@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Configuration, OpenAIApi } from "openai";
 
 const App: React.FC = () => {
 	const [username, setUsername] = useState("");
 	const [response, setResponse] = useState("");
 	const [responseReceived, setResponseReceived] = useState(false);
-	const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+
+	const configuration = new Configuration({
+		apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+	});
+	const openai = new OpenAIApi(configuration);
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setUsername(event.target.value);
@@ -85,6 +90,31 @@ const App: React.FC = () => {
 				};
 
 				console.log(datas);
+
+				let prompt = `give a short and wholesome / encouraging compliment session for the following github profile: ${username}. Here are the details: "${JSON.stringify(
+					datas
+				)}"`;
+
+				try {
+					const completion = await client.chat.completions.create({
+						model: "gpt-4o",
+						stream: false,
+						messages: [
+							{
+								role: "system",
+								content:
+									"You compliment and glaze people github account based on their bio, name, readme, and repos as wholesome and nice as possible, and keep it short and encourage them on msot aspects of their github.",
+							},
+							{ role: "user", content: prompt },
+						],
+					});
+
+					const glaze = completion.choices[0].message.content;
+					console.log(glaze);
+				} catch (error) {
+					console.error("Error:", error);
+				}
+
 				setResponse(`User: ${profileResponse.name || username}`);
 			} else {
 				setResponse("Our glazers are busy elsewhere, try again later.");
