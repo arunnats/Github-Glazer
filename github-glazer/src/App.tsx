@@ -17,7 +17,7 @@ const App: React.FC = () => {
 
 	return (
 		<div className="flex flex-col items-center min-h-screen p-8">
-			<h1 className="text-4xl font-bold mb-6 text-center">GitHub Glazers</h1>
+			<h1 className="text-5xl font-bold mb-6 text-center">GitHub Glazers</h1>
 			<p className="text-2xl mb-6">Enter a GitHub username to start glazing</p>
 			<input
 				type="text"
