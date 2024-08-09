@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import OpenAI from "openai";
+const OpenAI = (await import('openai')).default;
 
 const App: React.FC = () => {
   const [username, setUsername] = useState("");
