@@ -7,6 +7,7 @@ const App: React.FC = () => {
   const [response, setResponse] = useState("");
   const [responseReceived, setResponseReceived] = useState(false);
   const [responseSet, setResponseSet] = useState(false);
+  const [glazing, setGlazing] = useState(false); 
 
   const openaiApiKey = import.meta.env.VITE_OPENAI_API_KEY;
   const openai = new OpenAI({
@@ -24,7 +25,12 @@ const App: React.FC = () => {
       setResponse("");
       setResponseReceived(false);
       setResponseSet(false);
-    } else {
+    } else if (username === ""){
+	  alert("Github username can't be empty");
+	}else {
+	  setGlazing(true);
+	  setResponse("Glazing your GitHub!");
+
       const githubApiKey = import.meta.env.VITE_GITHUB_API_KEY;
 
       try {
@@ -96,7 +102,7 @@ const App: React.FC = () => {
                 { role: "user", content: prompt },
               ],
             });
-
+			
 			const glaze = completion.choices[0].message.content;
             setResponse(glaze || "Our glazers are recharging, try again later :(");
             setResponseSet(true);
@@ -104,12 +110,16 @@ const App: React.FC = () => {
             console.error("Error generating compliment:", error);
             setResponse("There was an error generating the compliment. Please try again later.");
           }
+
+          setGlazing(false);
         } else {
           setResponse("Our glazers are busy elsewhere, try again later.");
+          setGlazing(false); 
         }
       } catch (error) {
         console.error("Error:", error);
         setResponse("Our glazers are busy elsewhere, try again later.");
+        setGlazing(false);
       }
 
       setResponseReceived(true);
