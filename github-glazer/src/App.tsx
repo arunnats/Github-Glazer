@@ -29,7 +29,8 @@ const App: React.FC = () => {
 	  alert("Github username can't be empty");
 	}else {
 	  setGlazing(true);
-	  setResponse("Glazing your GitHub!");
+	  if(glazing)
+	  	setResponse("Glazing your GitHub!");
 
       const githubApiKey = import.meta.env.VITE_GITHUB_API_KEY;
 
