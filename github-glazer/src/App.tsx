@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-const OpenAI = (await import('openai')).default;
+const OpenAI = (await import("openai")).default;
 
 const App: React.FC = () => {
   const [username, setUsername] = useState("");
   const [response, setResponse] = useState("");
   const [responseReceived, setResponseReceived] = useState(false);
   const [responseSet, setResponseSet] = useState(false);
-  const [glazing, setGlazing] = useState(false); 
+  const [glazing, setGlazing] = useState(false);
 
   const openaiApiKey = import.meta.env.VITE_OPENAI_API_KEY;
   const openai = new OpenAI({
@@ -25,12 +25,10 @@ const App: React.FC = () => {
       setResponse("");
       setResponseReceived(false);
       setResponseSet(false);
-    } else if (username === ""){
-	  alert("Github username can't be empty");
-	}else {
-	    setGlazing(true);
-	  	setResponse("Glazing your GitHub!");
-      console.log(glazing);
+    } else if (username === "") {
+      alert("Github username can't be empty");
+    } else {
+      setGlazing(true);
 
       const githubApiKey = import.meta.env.VITE_GITHUB_API_KEY;
 
@@ -87,7 +85,7 @@ const App: React.FC = () => {
               .slice(0, 15),
           };
 
-          let prompt = `Give a short and wholesome / encouraging compliment session for the following GitHub profile: ${username}. Here are the details: "${JSON.stringify(
+          let prompt = `Give a short and wholesome compliment session with a little witty sarcasm for the following GitHub profile: ${username}. Here are the details: "${JSON.stringify(
             datas
           )}"`;
 
@@ -98,26 +96,30 @@ const App: React.FC = () => {
                 {
                   role: "system",
                   content:
-                    "You compliment and glaze people's GitHub accounts based on their bio, name, README, and repos as wholesomely and nicely as possible, and keep it around 250-300 words and break it into multiple paragraphs, full of internet humour and encouraging about most aspects of their GitHub.",
+                    "You glaze people's GitHub accounts based on their bio, name, README, and repos as wholesomely and nicely as possible with a twinge of sarcasm, and keep it around 250-300 words and break it into multiple paragraphs, full of internet humour and encouraging about most aspects of their GitHub.",
                 },
                 { role: "user", content: prompt },
               ],
             });
-			
-			const glaze = completion.choices[0].message.content;
-            setResponse(glaze || "Our glazers are recharging, try again later :(");
+
+            const glaze = completion.choices[0].message.content;
+            setResponse(
+              glaze || "Our glazers are recharging, try again later :("
+            );
             setResponseSet(true);
           } catch (error) {
             console.error("Error generating compliment:", error);
             setResponseSet(true);
-            setResponse("There was an error generating the compliment. Please try again later.");
+            setResponse(
+              "There was an error generating the compliment. Please try again later."
+            );
           }
 
           setGlazing(false);
         } else {
           setResponseSet(true);
           setResponse("Our glazers are busy elsewhere, try again later.");
-          setGlazing(false); 
+          setGlazing(false);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -132,7 +134,11 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center min-h-screen p-8">
-      <a href="https://github.com/arunnats/Github-Glazer"><h1 className="text-5xl font-bold mb-6 text-center hover:text-blue-200">GitHub Glazer</h1></a>
+      <a href="https://github.com/arunnats/Github-Glazer">
+        <h1 className="text-5xl font-bold mb-6 text-center hover:text-blue-200">
+          GitHub Glazer
+        </h1>
+      </a>
       <p className="text-2xl mb-6">Enter a GitHub username to start glazing</p>
       <input
         type="text"
@@ -152,13 +158,13 @@ const App: React.FC = () => {
           <div className="text-xl font-bold">{response}</div>
         ) : (
           <div className="text-xl font-bold">
-            Enter a username to start glazing
+            {glazing
+              ? "Glazing your GitHub!"
+              : "Enter a username to start glazing"}
           </div>
         )}
       </div>
-      <div className="flex flex-col w-full max-w-lg text-white p-6 rounded-md">
-
-      </div>
+      <div className="flex flex-col w-full max-w-lg text-white p-6 rounded-md"></div>
     </div>
   );
 };
