@@ -58,8 +58,7 @@ const App: React.FC = () => {
           let readmeResponse = "";
           try {
             let readmeData = await axios.get(
-              `https://raw.githubusercontent.com/${username}/${username}/main/README.md`,
-              { headers }
+              `https://raw.githubusercontent.com/${username}/${username}/main/README.md?raw=true`
             );
             readmeResponse = readmeData.data;
           } catch (error) {
@@ -133,7 +132,7 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center min-h-screen p-8">
-      <h1 className="text-5xl font-bold mb-6 text-center">GitHub Glazer</h1>
+      <a href="https://github.com/arunnats/Github-Glazer"><h1 className="text-5xl font-bold mb-6 text-center hover:text-blue-200">GitHub Glazer</h1></a>
       <p className="text-2xl mb-6">Enter a GitHub username to start glazing</p>
       <input
         type="text"
@@ -157,8 +156,8 @@ const App: React.FC = () => {
           </div>
         )}
       </div>
-      <div className="flex flex-col w-full max-w-lg min-h-[200px] bg-primary text-white p-6 rounded-md">
-      <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support Me on Ko-fi', '#29abe0', 'T6T111NE18');kofiwidget2.draw();</script> 
+      <div className="flex flex-col w-full max-w-lg text-white p-6 rounded-md">
+
       </div>
     </div>
   );
