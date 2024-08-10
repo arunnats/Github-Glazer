@@ -6,6 +6,8 @@
 
 **GitHub Glazer** is a React app built with Vite that glazed your GitHub profile. Simply enter a GitHub username, and the app fetches the user's profile information and repositories. It then uses OpenAI's GPT-3.5 to glaze your profile :)
 
+Try it out at [Github Glazer](https://githubglazer.arunnats.com).
+
 ## Setup
 1. Clone the repository.
 2. Install dependencies with `npm install`.
