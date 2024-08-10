@@ -135,11 +135,15 @@ const App: React.FC = () => {
   return (
     <div className="flex flex-col items-center min-h-screen p-8">
       <a href="https://github.com/arunnats/Github-Glazer">
-        <h1 className="text-5xl font-bold mb-6 text-center hover:text-blue-200">
+        <h1 className="text-6xl font-bold mb-6 text-center hover:text-blue-200">
           GitHub Glazer
         </h1>
       </a>
-      <p className="text-2xl mb-6">Enter a GitHub username to start glazing</p>
+      {/* <p className="text-2xl mb-6 w-full max-w-xl">
+        Feeling down? Job market seems rough? Projects not getting enough
+        traction? You look like you could use a little glazing.
+      </p> */}
+      <p className="text-3xl mb-6">Enter a GitHub username to start glazing</p>
       <input
         type="text"
         placeholder="Enter GitHub username"
@@ -164,7 +168,27 @@ const App: React.FC = () => {
           </div>
         )}
       </div>
-      <div className="flex flex-col w-full max-w-lg text-white p-6 rounded-md"></div>
+      <div className="flex flex-row w-full max-w-lg text-white p-2 rounded-md justify-center mx-auto">
+        <a href="https://github.com/arunnats/Github-Glazer">
+          <img
+            src="src//assets/github.svg"
+            alt="GitHub Logo"
+            className="w-12 h-12"
+          />
+        </a>
+        <div className="flex text-xl my-auto mx-3">
+          <p>
+            Contact creator at{" "}
+            <a
+              className="text-blue-200 hover:underline"
+              href="https://arunnats.com"
+              target="_blank"
+            >
+              Arun Nats
+            </a>
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
