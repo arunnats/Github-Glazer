@@ -28,9 +28,9 @@ const App: React.FC = () => {
     } else if (username === ""){
 	  alert("Github username can't be empty");
 	}else {
-	  setGlazing(true);
-	  if(glazing)
+	    setGlazing(true);
 	  	setResponse("Glazing your GitHub!");
+      console.log(glazing);
 
       const githubApiKey = import.meta.env.VITE_GITHUB_API_KEY;
 
@@ -45,6 +45,7 @@ const App: React.FC = () => {
         });
 
         if (response.status === 404) {
+          setResponseSet(true);
           setResponse("User not found. Please try again");
         } else if (response.ok) {
           let profileResponse = await response.json();
@@ -109,16 +110,19 @@ const App: React.FC = () => {
             setResponseSet(true);
           } catch (error) {
             console.error("Error generating compliment:", error);
+            setResponseSet(true);
             setResponse("There was an error generating the compliment. Please try again later.");
           }
 
           setGlazing(false);
         } else {
+          setResponseSet(true);
           setResponse("Our glazers are busy elsewhere, try again later.");
           setGlazing(false); 
         }
       } catch (error) {
         console.error("Error:", error);
+        setResponseSet(true);
         setResponse("Our glazers are busy elsewhere, try again later.");
         setGlazing(false);
       }
@@ -144,7 +148,7 @@ const App: React.FC = () => {
       >
         {responseSet ? "Clear" : "Glaze"}
       </button>
-      <div className="flex flex-col w-full max-w-lg min-h-[200px] bg-primary text-white p-6 rounded-md">
+      <div className="flex flex-col w-full max-w-lg min-h-[200px] bg-primary text-white p-6 rounded-md mb-3">
         {responseReceived ? (
           <div className="text-xl font-bold">{response}</div>
         ) : (
@@ -152,6 +156,9 @@ const App: React.FC = () => {
             Enter a username to start glazing
           </div>
         )}
+      </div>
+      <div className="flex flex-col w-full max-w-lg min-h-[200px] bg-primary text-white p-6 rounded-md">
+      <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support Me on Ko-fi', '#29abe0', 'T6T111NE18');kofiwidget2.draw();</script> 
       </div>
     </div>
   );
