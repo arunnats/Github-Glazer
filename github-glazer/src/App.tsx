@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 const OpenAI = (await import("openai")).default;
+import github from "./assets/github.svg";
 
 const App: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -170,11 +171,7 @@ const App: React.FC = () => {
       </div>
       <div className="flex flex-row w-full max-w-lg text-white p-2 rounded-md justify-center mx-auto">
         <a href="https://github.com/arunnats/Github-Glazer">
-          <img
-            src="src//assets/github.svg"
-            alt="GitHub Logo"
-            className="w-12 h-12"
-          />
+          <img src={github} alt="GitHub Logo" className="w-12 h-12" />
         </a>
         <div className="flex text-xl my-auto mx-3">
           <p>
