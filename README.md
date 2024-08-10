@@ -1,7 +1,7 @@
 # GitHub Glazer
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/6967639c-6c43-4649-b285-26ac15b63848" width="50" height="50" />
+  <img src="https://github.com/user-attachments/assets/6967639c-6c43-4649-b285-26ac15b63848" width="150" height="150" />
 </div>
 
 **GitHub Glazer** is a React app built with Vite that glazed your GitHub profile. Simply enter a GitHub username, and the app fetches the user's profile information and repositories. It then uses OpenAI's GPT-3.5 to glaze your profile :)
